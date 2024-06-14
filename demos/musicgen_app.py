@@ -245,10 +245,7 @@ def ui_full(launch_kwargs):
     with gr.Blocks() as interface:
         gr.Markdown(
             """
-            # MusicGen
-            This is your private demo for [MusicGen](https://github.com/facebookresearch/audiocraft),
-            a simple and controllable model for music generation
-            presented at: ["Simple and Controllable Music Generation"](https://huggingface.co/papers/2306.05284)
+            # GenMusic
             """
         )
         with gr.Row():
@@ -339,45 +336,6 @@ def ui_full(launch_kwargs):
         gr.Markdown(
             """
             ### More details
-
-            The model will generate a short music extract based on the description you provided.
-            The model can generate up to 30 seconds of audio in one pass.
-
-            The model was trained with description from a stock music catalog, descriptions that will work best
-            should include some level of details on the instruments present, along with some intended use case
-            (e.g. adding "perfect for a commercial" can somehow help).
-
-            Using one of the `melody` model (e.g. `musicgen-melody-*`), you can optionally provide a reference audio
-            from which a broad melody will be extracted.
-            The model will then try to follow both the description and melody provided.
-            For best results, the melody should be 30 seconds long (I know, the samples we provide are not...)
-
-            It is now possible to extend the generation by feeding back the end of the previous chunk of audio.
-            This can take a long time, and the model might lose consistency. The model might also
-            decide at arbitrary positions that the song ends.
-
-            **WARNING:** Choosing long durations will take a long time to generate (2min might take ~10min).
-            An overlap of 12 seconds is kept with the previously generated chunk, and 18 "new" seconds
-            are generated each time.
-
-            We present 10 model variations:
-            1. facebook/musicgen-melody -- a music generation model capable of generating music condition
-                on text and melody inputs. **Note**, you can also use text only.
-            2. facebook/musicgen-small -- a 300M transformer decoder conditioned on text only.
-            3. facebook/musicgen-medium -- a 1.5B transformer decoder conditioned on text only.
-            4. facebook/musicgen-large -- a 3.3B transformer decoder conditioned on text only.
-            5. facebook/musicgen-melody-large -- a 3.3B transformer decoder conditioned on and melody.
-            6. facebook/musicgen-stereo-*: same as the previous models but fine tuned to output stereo audio.
-
-            We also present two way of decoding the audio tokens
-            1. Use the default GAN based compression model. It can suffer from artifacts especially
-                for crashes, snares etc.
-            2. Use [MultiBand Diffusion](https://arxiv.org/abs/2308.02560). Should improve the audio quality,
-                at an extra computational cost. When this is selected, we provide both the GAN based decoded
-                audio, and the one obtained with MBD.
-
-            See [github.com/facebookresearch/audiocraft](https://github.com/facebookresearch/audiocraft/blob/main/docs/MUSICGEN.md)
-            for more details.
             """
         )
 
@@ -388,17 +346,7 @@ def ui_batched(launch_kwargs):
     with gr.Blocks() as demo:
         gr.Markdown(
             """
-            # MusicGen
-
-            This is the demo for [MusicGen](https://github.com/facebookresearch/audiocraft/blob/main/docs/MUSICGEN.md),
-            a simple and controllable model for music generation
-            presented at: ["Simple and Controllable Music Generation"](https://huggingface.co/papers/2306.05284).
-            <br/>
-            <a href="https://huggingface.co/spaces/facebook/MusicGen?duplicate=true"
-                style="display: inline-block;margin-top: .5em;margin-right: .25em;" target="_blank">
-            <img style="margin-bottom: 0em;display: inline;margin-top: -.25em;"
-                src="https://bit.ly/3gLdBN6" alt="Duplicate Space"></a>
-            for longer sequences, more control and no queue.</p>
+            # GenMusic
             """
         )
         with gr.Row():
@@ -447,28 +395,6 @@ def ui_batched(launch_kwargs):
         )
         gr.Markdown("""
         ### More details
-
-        The model will generate 15 seconds of audio based on the description you provided.
-        The model was trained with description from a stock music catalog, descriptions that will work best
-        should include some level of details on the instruments present, along with some intended use case
-        (e.g. adding "perfect for a commercial" can somehow help).
-
-        You can optionally provide a reference audio from which a broad melody will be extracted.
-        The model will then try to follow both the description and melody provided.
-        For best results, the melody should be 30 seconds long (I know, the samples we provide are not...)
-
-        You can access more control (longer generation, more models etc.) by clicking
-        the <a href="https://huggingface.co/spaces/facebook/MusicGen?duplicate=true"
-                style="display: inline-block;margin-top: .5em;margin-right: .25em;" target="_blank">
-            <img style="margin-bottom: 0em;display: inline;margin-top: -.25em;"
-                src="https://bit.ly/3gLdBN6" alt="Duplicate Space"></a>
-        (you will then need a paid GPU from HuggingFace).
-        If you have a GPU, you can run the gradio demo locally (click the link to our repo below for more info).
-        Finally, you can get a GPU for free from Google
-        and run the demo in [a Google Colab.](https://ai.honu.io/red/musicgen-colab).
-
-        See [github.com/facebookresearch/audiocraft](https://github.com/facebookresearch/audiocraft/blob/main/docs/MUSICGEN.md)
-        for more details. All samples are generated with the `stereo-melody` model.
         """)
 
         demo.queue(max_size=8 * 4).launch(**launch_kwargs)
